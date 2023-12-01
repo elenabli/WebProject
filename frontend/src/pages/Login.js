@@ -1,19 +1,19 @@
-import {useField} from "../hooks/useField";
-import {useLogin} from "../hooks/useLogin";
+import { useField } from "../hooks/useField";
+import { useLogin } from "../hooks/useLogin";
 
 const Login = () => {
   const email = useField("email");
   const password = useField("password");
-  const { login, error, isLoading } = useLogin();
+  const { handleLogin, error, isLoading } = useLogin();
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  const data = {
-    email: email.value,
-    password: password.value,
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+      email: email.value,
+      password: password.value,
+    };
+    await handleLogin(data);
   };
-  await login(data);
-}
 
   return (
     <form className="login" onSubmit={handleSubmit}>
