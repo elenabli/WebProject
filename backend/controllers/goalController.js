@@ -46,10 +46,11 @@ const getGoals = async (req, res, next) => {
 // @route   POST /api/goals
 // @access  Private
 const setGoal = async (req, res, next) => {
-  const { text } = req.body;
+  const { text, user_id } = req.body;
 
   try {
-    const goal = await Goal({ text });
+    const goal = await Goal({ text, user_id });
+    await goal.save();
 
     res.status(200).json(goal);
   } catch (error) {
@@ -90,7 +91,7 @@ const updateGoal = async (req, res, next) => {
 // @desc    Delete goal
 // @route   DELETE /api/goals/:id
 // @access  Private
-/* const deleteGoal = async (req, res, next) => {
+const deleteGoal = async (req, res, next) => {
   const goal = await Goal.findById(req.params.id);
 
   try {
@@ -103,10 +104,11 @@ const updateGoal = async (req, res, next) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-}; */
+};
 
 module.exports = {
   setGoal,
   getGoals,
   updateGoal,
+  deleteGoal,
 };
