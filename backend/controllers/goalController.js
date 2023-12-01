@@ -1,11 +1,43 @@
 const Goal = require("../models/goalModel");
 const User = require("../models/userModel");
 
+// @desc    Set goal
+// @route   POST /api/goals
+// @access  Private
+/* const setGoal = async (req, res, next) => {
+  const { text } = req.body;
+  let emptyFields = [];
+
+  if (!text) {
+    emptyFields.push("text");
+  }
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "Please fill in all the fields", emptyFields });
+  }
+
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "Please fill in all the fields", emptyFields });
+  }
+
+  // add doc to db
+  try {
+    // const user_id = req.user._id
+    const goal = await Goal.create({ text });
+    res.status(200).json(goal);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}; */
+
 // @desc    Get goals
 // @route   GET /api/goals
 // @access  Private
 const getGoals = async (req, res, next) => {
-  const goals = await Goal.find({ user: req.user._id });
+  const goals = await Goal.getGoals(User._id);
 
   res.status(200).json(goals);
 };
@@ -14,10 +46,10 @@ const getGoals = async (req, res, next) => {
 // @route   POST /api/goals
 // @access  Private
 const setGoal = async (req, res, next) => {
-  const { text, user } = req.body;
+  const { text } = req.body;
 
   try {
-    const goal = await Goal.setGoal({ text, user });
+    const goal = await Goal({ text });
 
     res.status(200).json(goal);
   } catch (error) {
@@ -29,19 +61,25 @@ const setGoal = async (req, res, next) => {
 // @route   PUT /api/goals/:id
 // @access  Private
 const updateGoal = async (req, res, next) => {
-  const { text, user } = req.body;
+  const { text, user_id } = req.body;
+  console.log(user_id);
+  console.log(req.params.id);
 
   try {
     const goal = await Goal.findById(req.params.id);
+    console.log(goal);
+    // const updatedGoal = await Goal.updateGoal(id, text, user);
 
     if (goal) {
-      goal.text = text /* || goal.text */;
-      goal.user = user /* || goal.user */;
+      goal.text = text;
+      console.log("foo2");
+      goal.user = user_id;
 
       const updatedGoal = await goal.save();
 
       res.status(200).json(updatedGoal);
     } else {
+      console.log("foo3");
       res.status(404).json({ message: "Goal not found" });
     }
   } catch (error) {
@@ -52,7 +90,7 @@ const updateGoal = async (req, res, next) => {
 // @desc    Delete goal
 // @route   DELETE /api/goals/:id
 // @access  Private
-const deleteGoal = async (req, res, next) => {
+/* const deleteGoal = async (req, res, next) => {
   const goal = await Goal.findById(req.params.id);
 
   try {
@@ -65,11 +103,10 @@ const deleteGoal = async (req, res, next) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-};
+}; */
 
 module.exports = {
-  getGoals,
   setGoal,
+  getGoals,
   updateGoal,
-  deleteGoal,
 };
