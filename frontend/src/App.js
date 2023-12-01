@@ -5,12 +5,15 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Navbar from "./components/Navbar";
+import useAuth from "./hooks/useAuth";
 
 function App() {
+  const { user } = useAuth();
+
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
+        <Navbar user={user}/>
         <div className="pages">
           <Routes>
             <Route path="/" element={<Home />} />

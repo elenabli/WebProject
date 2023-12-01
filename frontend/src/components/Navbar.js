@@ -1,7 +1,17 @@
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
-  const flag = false;
+const Navbar = (user) => {
+  console.log(user);
+  const {logout} = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login")
+  }
+
   return (
     <header>
       <div className="container">
@@ -9,13 +19,13 @@ const Navbar = () => {
           <h1>Dashboard</h1>
         </Link>
         <nav>
-          {flag && (
+          {user && (
             <div>
-              <span>my.email@email.com</span>
-              <button>Log out</button>
+              <span>{user.email}</span>
+              <button onSubmit={handleLogout}>Log out</button>
             </div>
           )}
-          {!flag && (
+          {!user && (
             <div>
               <Link to="/login">Login</Link>
               <Link to="/signup">Signup</Link>

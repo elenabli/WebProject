@@ -5,7 +5,7 @@ const Signup = () => {
   const name = useField("text");
   const email = useField("email");
   const password = useField("password");
-  const url = "api/users/register";
+  const url = "http://localhost:5001/api/users/register";
 
   const { signup, error, isLoading } = useSignup();
 
