@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const goalSchema = mongoose.Schema({
+const goalSchema = new Schema({
   text: {
     type: String,
     required: true,
@@ -20,8 +20,8 @@ goalSchema.statics.getGoals = async function (user) {
   return goals;
 };
 
-goalSchema.statics.setGoal = async function (text, user) {
-  const goal = await this.create({ text, user });
+goalSchema.statics.setGoal = async function (text) {
+  const goal = await this.create({ text });
 
   return goal;
 };
