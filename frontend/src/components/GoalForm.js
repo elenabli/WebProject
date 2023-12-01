@@ -3,7 +3,7 @@ import { useField } from "../hooks/useField";
 
 const GoalForm = () => {
   const goalText = useField("text");
-  
+
   const { fetchData } = useFetch("/api/goals", "POST");
 
   const handleSubmit = async (event) => {

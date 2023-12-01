@@ -46,7 +46,8 @@ const getGoals = async (req, res, next) => {
 // @route   POST /api/goals
 // @access  Private
 const setGoal = async (req, res, next) => {
-  const { text, user_id } = req.body;
+  const user_id = req.user.id;
+  const { text } = req.body;
   try {
     const goal = await Goal({ text, user_id });
     await goal.save();
