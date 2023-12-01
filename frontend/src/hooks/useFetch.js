@@ -4,6 +4,7 @@ const useFetch = (url, reqMethod) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const token = JSON.parse(sessionStorage.getItem("user")).token;
 
   const fetchData = useCallback(
     async (body = null) => {
@@ -13,6 +14,7 @@ const useFetch = (url, reqMethod) => {
           method: reqMethod,
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: body ? JSON.stringify(body) : null,
         });
@@ -24,7 +26,7 @@ const useFetch = (url, reqMethod) => {
         setLoading(false);
       }
     },
-    [url, reqMethod]
+    [url, reqMethod, token]
   );
 
   return { data, loading, error, fetchData };

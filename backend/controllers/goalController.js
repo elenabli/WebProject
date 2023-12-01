@@ -37,7 +37,7 @@ const User = require("../models/userModel");
 // @route   GET /api/goals
 // @access  Private
 const getGoals = async (req, res, next) => {
-  const goals = await Goal.getGoals(User._id);
+  const goals = await Goal.getGoals(req.user.id);
 
   res.status(200).json(goals);
 };
@@ -47,7 +47,6 @@ const getGoals = async (req, res, next) => {
 // @access  Private
 const setGoal = async (req, res, next) => {
   const { text, user_id } = req.body;
-
   try {
     const goal = await Goal({ text, user_id });
     await goal.save();
