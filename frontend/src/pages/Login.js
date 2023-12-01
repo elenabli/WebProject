@@ -1,14 +1,27 @@
+import {useField} from "../hooks/useField";
+import {useLogin} from "../hooks/useLogin";
+
 const Login = () => {
+  const email = useField("email");
+  const password = useField("password");
+  const { login, error, isLoading } = useLogin();
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  await login(email.value, password.value);
+}
+
   return (
-    <form className="login">
+    <form className="login" onSubmit={handleSubmit}>
       <h3>Log In</h3>
 
       <label>Email address:</label>
-      <input type="email" />
+      <input {...email} />
       <label>Password:</label>
-      <input type="password" />
+      <input {...password} />
 
-      <button>Log in</button>
+      <button disabled={isLoading}>Log in</button>
+      {error && <div className="error">{error}</div>}
     </form>
   );
 };

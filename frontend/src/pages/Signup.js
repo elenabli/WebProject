@@ -10,7 +10,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await signup(email.value, password.value);
+    await signup(name.value, email.value, password.value);
   };
 
   return (
