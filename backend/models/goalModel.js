@@ -1,21 +1,21 @@
 const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema;
-
-const goalSchema = new Schema({
-  text: {
-    type: String,
-    required: true,
+const goalSchema = mongoose.Schema(
+  {
+    text: {
+      type: String,
+      required: [true, "Please add a text value"],
+    },
+    user_id: {
+      type: String,
+      required: true,
+    },
   },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "User",
-  },
-});
+  { timestamps: true }
+);
 
-goalSchema.statics.getGoals = async function (user) {
-  const goals = await this.find({ user });
+goalSchema.statics.getGoals = async function (userId) {
+  const goals = await this.find({ user_id: userId });
 
   return goals;
 };
@@ -30,13 +30,14 @@ goalSchema.statics.updateGoal = async function (id, text, user) {
   const goal = await this.findById(id);
 
   if (goal) {
-    goal.text = text /* || goal.text */;
-    goal.user = user /* || goal.user */;
+    goal.text = text;
+    goal.user_id = user._id;
 
     const updatedGoal = await goal.save();
 
     return updatedGoal;
   } else {
+    console.log("foo");
     throw new Error("Goal not found");
   }
 };
