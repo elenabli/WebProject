@@ -6,7 +6,6 @@ const {
   setGoal,
   updateGoal,
   deleteGoal,
-  getGoal,
 } = require("../controllers/goalController");
 
 // Route for getting goals (GET /api/goals)
@@ -34,6 +33,6 @@ router.route("/").post(setGoal);
 router.route("/:id").put(updateGoal);
 
 // Route for deleting a goal by ID (DELETE /api/goals/:id)
-// router.route("/goals/:id").delete(protect, deleteGoal);
+router.route("/:id").delete(deleteGoal);
 
 module.exports = router;
