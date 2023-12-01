@@ -6,18 +6,34 @@ const {
   setGoal,
   updateGoal,
   deleteGoal,
+  getGoal,
 } = require("../controllers/goalController");
 
 // Route for getting goals (GET /api/goals)
-router.route("/goals").get(protect, getGoals);
+// router.get("/", protect, getGoals);
+
+// Route for getting single goal (GET /api/goals/:id)
+// router.get("/:id", protect, getGoal);
 
 // Route for creating a new goal (POST /api/goals)
-router.route("/goals").post(setGoal);
+// router.post("/", setGoal);
 
 // Route for updating a goal by ID (PUT /api/goals/:id)
-router.route("/goals/:id").put(protect, updateGoal);
+// router.put("/:id", protect, updateGoal);
 
 // Route for deleting a goal by ID (DELETE /api/goals/:id)
-router.route("/goals/:id").delete(protect, deleteGoal);
+// router.delete("/:id", protect, deleteGoal);
+
+// Route for getting goals (GET /api/goals)
+router.route("/").get(getGoals);
+
+// Route for creating a new goal (POST /api/goals)
+router.route("/").post(setGoal);
+
+// Route for updating a goal by ID (PUT /api/goals/:id)
+router.route("/:id").put(updateGoal);
+
+// Route for deleting a goal by ID (DELETE /api/goals/:id)
+// router.route("/goals/:id").delete(protect, deleteGoal);
 
 module.exports = router;
