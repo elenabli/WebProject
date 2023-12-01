@@ -8,7 +8,11 @@ const Login = () => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
-  await login(email.value, password.value);
+  const data = {
+    email: email.value,
+    password: password.value,
+  };
+  await login(data);
 }
 
   return (
