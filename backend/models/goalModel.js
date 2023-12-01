@@ -20,8 +20,8 @@ goalSchema.statics.getGoals = async function (userId) {
   return goals;
 };
 
-goalSchema.statics.setGoal = async function (text) {
-  const goal = await this.create({ text });
+goalSchema.statics.setGoal = async function (text, userId) {
+  const goal = await this.create({ text, user_id: userId });
 
   return goal;
 };
