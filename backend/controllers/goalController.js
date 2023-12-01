@@ -17,7 +17,7 @@ const setGoal = async (req, res, next) => {
   const { text, user } = req.body;
 
   try {
-    const goal = await Goal.create({ text, user });
+    const goal = await Goal.setGoal({ text, user });
 
     res.status(200).json(goal);
   } catch (error) {
