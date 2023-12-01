@@ -1,15 +1,36 @@
+import { useSignup } from "../hooks/useSignup";
+import {useField} from "../hooks/useField";
+
 const Signup = () => {
+  const name = useField("text");
+  const email = useField("email");
+  const password = useField("password");
+  const url = "/api/users";
+
+  const { signup, error, isLoading } = useSignup();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const obj = {
+      name: name.value,
+      email: email.value,
+      password: password.value,
+    };
+    await signup(obj, url);
+  };
+
   return (
-    <form className="signup">
+    <form className="signup" onSubmit={handleSubmit}>
       <h3>Sign Up</h3>
       <label>Name:</label>
-      <input type="text" />
+      <input {...name} />
       <label>Email address:</label>
-      <input type="email" />
+      <input {...email} />
       <label>Password:</label>
-      <input type="password" />
+      <input {...password} />
 
-      <button>Sign up</button>
+      <button disabled={isLoading}>Sign up</button>
+      {error && <div className="error">{error}</div>}
     </form>
   );
 };

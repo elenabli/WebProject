@@ -1,29 +1,20 @@
-// components
-import GoalDetails from "../components/GoalDetails";
+import React, { useEffect } from "react";
 import GoalForm from "../components/GoalForm";
-
-const goalsArray = [
-  {
-    text: "Learn a new programming language",
-    createdAt: new Date(2023, 11, 30),
-  },
-  {
-    text: "Complete a fitness challenge",
-    createdAt: new Date(2023, 11, 15),
-  },
-  {
-    text: "Read 10 books by the end of the year",
-    createdAt: new Date(2023, 10, 1),
-  },
-];
+import GoalDetails from "../components/GoalDetails";
+import useFetch from "../hooks/useFetch";
 
 const Home = () => {
+  const { data, fetchData } = useFetch("api/goals", "GET");
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
   return (
     <div className="home">
       <div className="goals">
-        <GoalDetails goal={goalsArray[0]} />
-        <GoalDetails goal={goalsArray[1]} />
-        <GoalDetails goal={goalsArray[2]} />
+        {data &&
+          data.map((goal, index) => <GoalDetails key={index} goal={goal} />)}
       </div>
       <GoalForm />
     </div>
