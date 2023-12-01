@@ -5,12 +5,18 @@ const Signup = () => {
   const name = useField("text");
   const email = useField("email");
   const password = useField("password");
+  const url = "/api/users";
 
   const { signup, error, isLoading } = useSignup();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await signup(name.value, email.value, password.value);
+    const obj = {
+      name: name.value,
+      email: email.value,
+      password: password.value,
+    };
+    await signup(obj, url);
   };
 
   return (
