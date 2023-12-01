@@ -12,7 +12,7 @@ const {
 router.route("/goals").get(protect, getGoals);
 
 // Route for creating a new goal (POST /api/goals)
-router.route("/goals").post(protect, setGoal);
+router.route("/goals").post(setGoal);
 
 // Route for updating a goal by ID (PUT /api/goals/:id)
 router.route("/goals/:id").put(protect, updateGoal);

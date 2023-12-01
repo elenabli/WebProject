@@ -13,5 +13,6 @@ router.route("/register").post(registerUser);
 // Log in a user
 router.route("/login").post(loginUser);
 // Get user data
+router.route("/me").get(protect, getMe);
 
 module.exports = router;
