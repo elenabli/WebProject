@@ -49,9 +49,7 @@ const setGoal = async (req, res, next) => {
   const user_id = req.user.id;
   const { text } = req.body;
   try {
-    const goal = await Goal({ text, user_id });
-    await goal.save();
-
+    const goal = await Goal.setGoal(text, user_id);
     res.status(200).json(goal);
   } catch (error) {
     res.status(400).json({ message: error.message });
