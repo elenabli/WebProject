@@ -6,12 +6,14 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Navbar from "./components/Navbar";
 import useAuth from "./hooks/useAuth";
+import { AuthProvider } from "./context/Auth";
 
 function App() {
   const { user } = useAuth();
 
   return (
     <div className="App">
+      <AuthProvider>
       <BrowserRouter>
         <Navbar user={user}/>
         <div className="pages">
@@ -22,6 +24,7 @@ function App() {
           </Routes>
         </div>
       </BrowserRouter>
+      </AuthProvider>
     </div>
   );
 }

@@ -1,16 +1,21 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/Auth";
 
-const Navbar = (user) => {
-  console.log(user);
-  const {logout} = useAuth();
+const Navbar = () => {
+  const { isLogged, setIsLogged } = useContext(AuthContext);
+  const storedUser = sessionStorage.getItem("user");
+  const user = storedUser ? JSON.parse(storedUser) : null;
+  const email = user ? user.email : null;
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
-    navigate("/login")
-  }
+    sessionStorage.removeItem("user");
+    setIsLogged(false);
+    navigate("/login");
+  };
 
   return (
     <header>
@@ -19,13 +24,13 @@ const Navbar = (user) => {
           <h1>Dashboard</h1>
         </Link>
         <nav>
-          {user && (
+          {isLogged && (
             <div>
-              <span>{user.email}</span>
-              <button onSubmit={handleLogout}>Log out</button>
+              <span>{email}</span>
+              <button onClick={handleLogout}>Log out</button>
             </div>
           )}
-          {!user && (
+          {!isLogged && (
             <div>
               <Link to="/login">Login</Link>
               <Link to="/signup">Signup</Link>

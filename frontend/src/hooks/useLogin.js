@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import AuthContext from "../context/Auth";
 
 export const useLogin = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const {isLoading, setIsLoading, setIsLogged} = useContext(AuthContext);
 
   const handleLogin = async (data) => {
     setIsLoading(true);
@@ -22,6 +23,7 @@ export const useLogin = () => {
         const user = await response.json();
         sessionStorage.setItem("user", JSON.stringify(user));
         console.log("User logged in successfully!");
+        setIsLogged(true);
 
         navigate("/");
       } else {
@@ -32,6 +34,8 @@ export const useLogin = () => {
     } catch (error) {
       console.error("Error during login:", error);
       setError("Error during login", error);
+      setIsLoading(false);
+    } finally {
       setIsLoading(false);
     }
   };
