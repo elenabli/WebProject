@@ -14,7 +14,7 @@ const Home = () => {
     <div className="home">
       <div className="goals">
         {data &&
-          data.map((goal, index) => <GoalDetails key={index} goal={goal} />)}
+          data.map((goal) => <GoalDetails key={goal._id} goal={goal} />)}
       </div>
       <GoalForm />
     </div>

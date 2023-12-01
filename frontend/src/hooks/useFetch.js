@@ -7,9 +7,12 @@ const useFetch = (url, reqMethod) => {
   const token = JSON.parse(sessionStorage.getItem("user")).token;
 
   const fetchData = useCallback(
-    async (body = null) => {
+    async (body = null, id = null) => {
       setLoading(true);
       try {
+        if (id) {
+          url = `${url}/${id}`;
+        }
         const response = await fetch(url, {
           method: reqMethod,
           headers: {
